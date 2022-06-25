@@ -1,9 +1,8 @@
 package cn.cruder.dousx.or.consumer.config;
 
-import cn.cruder.dousx.or.api.define.UserApi;
+import cn.cruder.dousx.or.api.feign.ProducerFeignApi;
 import cn.cruder.dousx.or.consumer.properties.ServicesUrlProperties;
 import feign.Feign;
-import feign.Logger;
 import feign.Target;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -20,8 +19,8 @@ public class FeignConfig {
 
     @Bean
     @ConditionalOnClass({ServicesUrlProperties.class, Feign.Builder.class})
-    public UserApi userApi(Feign feign, ServicesUrlProperties servicesUrlProperties) {
-        return feign.newInstance(new Target.HardCodedTarget<>(UserApi.class, servicesUrlProperties.getProducer()));
+    public ProducerFeignApi producerFeignApi(Feign feign, ServicesUrlProperties servicesUrlProperties) {
+        return feign.newInstance(new Target.HardCodedTarget<>(ProducerFeignApi.class, servicesUrlProperties.getProducer()));
     }
 
     @Bean

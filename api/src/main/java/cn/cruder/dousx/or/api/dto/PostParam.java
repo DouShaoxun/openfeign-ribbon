@@ -9,13 +9,13 @@ import java.io.Serializable;
 
 /**
  * @author dousx
- * @date 2022-06-17 20:24
+ * @date 2022-06-25 21:08
  */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class UserDto implements Serializable {
+public class PostParam implements Serializable {
     private String id;
     private String name;
     private Integer age;
