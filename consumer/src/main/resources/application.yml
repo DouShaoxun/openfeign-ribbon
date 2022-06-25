@@ -1,0 +1,15 @@
+server:
+  port: 7080
+logging:
+  pattern:
+    console: '%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{10}.%M [%line]) - %cyan(%msg%n)'
+  charset:
+    console: UTF-8
+  level:
+    root: info
+    cn:
+      cruder: debug
+# feign配置
+services:
+  url:
+    producer: http://localhost:7070/

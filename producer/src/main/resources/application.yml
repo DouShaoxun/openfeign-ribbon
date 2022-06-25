@@ -1,0 +1,11 @@
+server:
+  port: 7070
+logging:
+  pattern:
+    console: '%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{10}.%M [%line]) - %cyan(%msg%n)'
+  charset:
+    console: UTF-8
+  level:
+    root: info
+    cn:
+      cruder: debug
