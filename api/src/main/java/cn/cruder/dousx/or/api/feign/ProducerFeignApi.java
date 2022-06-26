@@ -4,6 +4,7 @@ import cn.cruder.dousx.or.api.constant.HttpConstant;
 import cn.cruder.dousx.or.api.dto.PostParam;
 import cn.cruder.dousx.or.api.dto.PostResult;
 import cn.cruder.dousx.or.api.dto.GetResult;
+import cn.cruder.dousx.or.api.expander.JsonExpander;
 import feign.Body;
 import feign.Headers;
 import feign.Param;
@@ -39,7 +40,7 @@ public interface ProducerFeignApi {
      * <br/>
      *
      * @param token authorization取值
-     * @param body  {@link PostParam}转JSON,然后赋值到Body里
+     * @param body  {@link PostParam}
      * @return {@link PostResult}
      */
     @RequestLine(value = HttpConstant.REQUEST_LINE_POST + POST_TEST_URI)
@@ -48,5 +49,5 @@ public interface ProducerFeignApi {
             "Content-Type: application/json;charset=utf-8"
     })
     @Body("{body}")
-    PostResult postTest(@Param("token") String token, @Param("body") String body);
+    PostResult postTest(@Param("token") String token, @Param(value = "body", expander = JsonExpander.class) PostParam body);
 }

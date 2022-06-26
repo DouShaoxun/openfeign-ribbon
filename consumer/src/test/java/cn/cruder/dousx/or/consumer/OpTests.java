@@ -34,7 +34,7 @@ public class OpTests {
     void testPost() {
         String token = "bran - 123";
         PostParam param = new PostParam(UUID.randomUUID().toString(), "tom", 19);
-        PostResult postResult = producerFeignApi.postTest(token, JSON.toJSONString(param));
+        PostResult postResult = producerFeignApi.postTest(token, param);
         log.info(JSON.toJSONString(postResult));
 
     }
