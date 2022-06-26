@@ -3,9 +3,11 @@ package cn.cruder.dousx.or.consumer.config;
 import cn.cruder.dousx.or.api.feign.ProducerFeignApi;
 import cn.cruder.dousx.or.consumer.properties.ServicesUrlProperties;
 import feign.Feign;
+import feign.Logger;
 import feign.Target;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
+import feign.ribbon.RibbonClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,8 @@ public class FeignConfig {
     @Bean
     public Feign feign() {
         return Feign.builder()
+                .logger(new Logger.JavaLogger(this.getClass().getName()))
+                .logLevel(Logger.Level.FULL)
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
                 .build();
