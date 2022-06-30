@@ -12,4 +12,4 @@ logging:
 # feign配置
 services:
   url:
-    producer: http://localhost:7070/
+    producer: http://producer
