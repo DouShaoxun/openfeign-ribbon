@@ -24,20 +24,25 @@ public class OpTests {
     @Autowired
     ProducerFeignApi producerFeignApi;
 
+
     @Test
     void testGet() {
-        GetResult user = producerFeignApi.getTest();
-        log.info(JSON.toJSONString(user));
+        for (int i = 0; i < 10; i++) {
+            GetResult user = producerFeignApi.getTest();
+            log.info(JSON.toJSONString(user));
+        }
     }
 
     @Test
     void testPost() {
         for (int i = 0; i < 10; i++) {
-            String token = "bran - 123";
+            String token = UUID.randomUUID().toString();
             PostParam param = new PostParam(UUID.randomUUID().toString(), "tom", 19);
             PostResult postResult = producerFeignApi.postTest(token, param);
             log.info(JSON.toJSONString(postResult));
         }
-
     }
+
+
+
 }

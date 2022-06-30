@@ -13,3 +13,11 @@ logging:
 services:
   url:
     producer: http://producer
+# 自定义ribbon配置(可以单独移出去)
+ribbon-config:
+  ribbon-infos:
+    #第1个值
+    - client-name: producer
+      server-list:
+        - localhost:7070
+        - localhost:7071
