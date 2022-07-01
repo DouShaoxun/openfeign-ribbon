@@ -33,7 +33,7 @@ import java.util.Map;
 public class FeignConfig {
 
     @Bean
-    @ConditionalOnClass({ServicesUrlProperties.class, Feign.Builder.class})
+    @ConditionalOnClass({ServicesUrlProperties.class, Feign.class})
     public ProducerFeignApi producerFeignApi(Feign feign, ServicesUrlProperties servicesUrlProperties) {
         return feign.newInstance(new Target.HardCodedTarget<>(ProducerFeignApi.class, servicesUrlProperties.getProducer()));
     }
