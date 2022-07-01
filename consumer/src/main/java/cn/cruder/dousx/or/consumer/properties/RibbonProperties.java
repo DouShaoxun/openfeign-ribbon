@@ -1,13 +1,13 @@
 package cn.cruder.dousx.or.consumer.properties;
 
-import cn.cruder.dousx.or.consumer.properties.entity.RibbonInfo;
+import com.netflix.loadbalancer.Server;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author dousx
@@ -16,10 +16,12 @@ import java.util.List;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "ribbon-config")
+@ConfigurationProperties(prefix = "ribbon-map-config")
 public class RibbonProperties {
-
-    private List<RibbonInfo> ribbonInfos;
-
+    /**
+     * <li/> key - clientName
+     * <li/> value - host+":"+port,例如:localhost:7070 ,用于构建{@link Server#Server(String, int)}
+     */
+    private Map<String, List<String>> ribbonInfos;
 
 }

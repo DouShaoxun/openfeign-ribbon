@@ -4,12 +4,15 @@ import cn.cruder.dousx.or.api.dto.GetResult;
 import cn.cruder.dousx.or.api.dto.PostParam;
 import cn.cruder.dousx.or.api.dto.PostResult;
 import cn.cruder.dousx.or.api.feign.ProducerFeignApi;
+import cn.cruder.dousx.or.consumer.properties.RibbonProperties;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -23,7 +26,8 @@ import java.util.UUID;
 public class OpTests {
     @Autowired
     ProducerFeignApi producerFeignApi;
-
+    @Autowired
+    RibbonProperties ribbonProperties;
 
     @Test
     void testGet() {
@@ -43,6 +47,12 @@ public class OpTests {
         }
     }
 
+    @Test
+    void test() {
+        Map<String, List<String>> ribbonInfos = ribbonProperties.getRibbonInfos();
+        log.info(JSON.toJSONString(ribbonInfos));
+
+    }
 
 
 }

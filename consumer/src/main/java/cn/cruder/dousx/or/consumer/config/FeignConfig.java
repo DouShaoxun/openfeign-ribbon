@@ -3,7 +3,6 @@ package cn.cruder.dousx.or.consumer.config;
 import cn.cruder.dousx.or.api.feign.ProducerFeignApi;
 import cn.cruder.dousx.or.consumer.properties.RibbonProperties;
 import cn.cruder.dousx.or.consumer.properties.ServicesUrlProperties;
-import cn.cruder.dousx.or.consumer.properties.entity.RibbonInfo;
 import com.netflix.client.ClientFactory;
 import com.netflix.client.config.ClientConfigFactory;
 import com.netflix.client.config.IClientConfig;
@@ -20,10 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author dousx
@@ -41,12 +41,13 @@ public class FeignConfig {
     @Bean
     @ConditionalOnClass({RibbonProperties.class})
     public Feign feign(@Autowired RibbonProperties ribbonProperties) {
-        Map<String, List<String>> collect = ribbonProperties.getRibbonInfos()
-                .stream()
-                .collect(Collectors.toMap(RibbonInfo::getClientName, RibbonInfo::getServerList));
+        Map<String, List<String>> ribbonInfos = ribbonProperties.getRibbonInfos();
+        if (CollectionUtils.isEmpty(ribbonInfos)) {
+            throw new RuntimeException("没有ribbon配置");
+        }
         RibbonClient ribbonClient = RibbonClient.builder().lbClientFactory(clientName -> {
             BaseLoadBalancer loadBalancer = new BaseLoadBalancer();
-            List<String> serverList = collect.get(clientName);
+            List<String> serverList = ribbonInfos.getOrDefault(clientName, new ArrayList<>());
             for (String hostPort : serverList) {
                 String[] split = hostPort.split(":");
                 loadBalancer.addServer(new Server(split[0], Integer.parseInt(split[1])));
